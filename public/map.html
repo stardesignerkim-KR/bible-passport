@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>바이블패스포트 — 순례 지도</title>
+  <meta name="description" content="66개 도시(책)와 1,189걸음(장)을 한눈에. 오늘 내 위치와 도장을 확인하세요.">
+  <meta name="theme-color" content="#FFF8EC">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app-header"></div>
+  <main class="wrap">
+    <section class="hero compact">
+      <span class="pill" id="locPill">내 위치</span>
+      <h1>순례 지도 <small>요한계시록 → 창세기</small></h1>
+      <p class="sub" id="locSub"></p>
+    </section>
+
+    <section class="card" aria-label="전체 지도">
+      <div class="card-head"><h2>한눈에 보기</h2><span class="hint">도시를 누르면 해당 도시로 이동해요</span></div>
+      <div id="stats"></div>
+      <div class="journey" id="journey"></div>
+      <div class="legend">
+        <span><i class="lg here"></i>오늘 위치</span>
+        <span><i class="lg done"></i>도시 도착</span>
+        <span><i class="lg full"></i>완주</span>
+      </div>
+    </section>
+
+    <div id="cities"></div>
+  </main>
+  <button class="fab" id="btnHere" hidden>내 위치로</button>
+  <div id="app-footer"></div>
+  <script type="module" src="js/map.js"></script>
+</body>
+</html>

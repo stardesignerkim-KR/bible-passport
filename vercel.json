@@ -1,0 +1,8 @@
+{
+  "outputDirectory": "public",
+  "cleanUrls": true,
+  "rewrites": [{ "source": "/api/calendar.ics", "destination": "/api/calendar" }],
+  "headers": [
+    { "source": "/data/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }] }
+  ]
+}

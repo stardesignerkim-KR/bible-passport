@@ -1,0 +1,13 @@
+{
+  "name": "bible-passport",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "sample": "node scripts/make-sample.mjs",
+    "fetch": "node scripts/fetch-youtube.mjs",
+    "fetch:rss": "node scripts/fetch-youtube.mjs --rss"
+  },
+  "engines": { "node": ">=20" }
+}

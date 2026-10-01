@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>바이블패스포트 — 오늘의 걸음</title>
+  <meta name="description" content="요한계시록에서 창세기까지 거꾸로 걷는 성경 순례길. 매일 한 걸음, 오늘의 영상과 순례자 여권.">
+  <meta name="theme-color" content="#FFF8EC">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app-header"></div>
+  <main class="wrap">
+    <section class="hero">
+      <span class="pill" id="dayPill">순례 준비 중</span>
+      <h1 id="todayTitle">오늘의 걸음</h1>
+      <p class="sub" id="todaySub"></p>
+    </section>
+
+    <div class="player-box" id="playerBox">
+      <div id="player"></div>
+      <div class="player-msg" id="playerMsg" hidden></div>
+    </div>
+    <div class="actions">
+      <button class="btn ghost" id="btnBook" hidden></button>
+      <a class="btn ghost" href="map.html" id="btnMap">지도에서 내 위치 보기</a>
+      <a class="btn link" id="ytLink" target="_blank" rel="noopener" hidden>유튜브에서 열기</a>
+    </div>
+
+    <section class="card passport" aria-label="순례자 여권">
+      <div class="card-head">
+        <h2>순례자 여권</h2>
+        <span class="hint">영상을 재생하면 도장이 찍혀요</span>
+      </div>
+      <div id="stats"></div>
+      <div class="cal-head">
+        <button class="icon-btn" id="calPrev" aria-label="이전 달">‹</button>
+        <strong id="calTitle"></strong>
+        <button class="icon-btn" id="calNext" aria-label="다음 달">›</button>
+      </div>
+      <div class="cal" id="cal"></div>
+    </section>
+
+    <section class="card cta">
+      <div>
+        <h2>매일 아침, 오늘의 걸음이 도착해요</h2>
+        <p class="hint">내 캘린더에 구독하면 앱 설치 없이 알림을 받을 수 있어요.</p>
+      </div>
+      <button class="btn primary" id="ctaAlarm">아침 알림 받기</button>
+    </section>
+  </main>
+  <div id="app-footer"></div>
+  <script type="module" src="js/today.js"></script>
+</body>
+</html>
