@@ -8,7 +8,7 @@ function load() {
   if (!mem || typeof mem !== 'object') mem = {};
   mem.days ??= {};      // { 'YYYY-MM-DD': {t} }  출석 도장
   mem.chapters ??= {};  // { '66-22': 'YYYY-MM-DD' }  걸음(장) 도장
-  mem.books ??= {};     // { '66': 'YYYY-MM-DD' }  도시(책) 도장
+  mem.books ??= {};     // { '66': 'YYYY-MM-DD' }  말씀(책) 도장
   mem.guideSeen ??= false;
   return mem;
 }
@@ -21,7 +21,7 @@ function save() {
  * 영상을 "재생"하면 호출 (출석체크 개념 — 끝까지 안 봐도 됨)
  * - 날짜 도장: 어떤 영상이든 재생하면 오늘 날짜에 찍힘
  * - 걸음 도장: 장 영상 재생 시
- * - 도시 도장: 그 책의 걸음 도장이 하나라도 찍히면
+ * - 말씀 도장: 그 책의 걸음 도장이 하나라도 찍히면
  */
 export function stampPlay({ kind, book, ch }, date) {
   const s = load();

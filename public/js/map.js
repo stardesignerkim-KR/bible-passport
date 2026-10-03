@@ -1,5 +1,5 @@
 import { BOOKS, bookByN } from './bible.js';
-import { kstDateStr, pickToday } from './schedule.js';
+import { kstDateStr, pickToday, pickBookEntry } from './schedule.js';
 import * as store from './stamps.js';
 import { createPlayer, watchUrl } from './player.js';
 import { $, $$, esc, loadData, renderHeader, openDialog, stampToast, statsHtml, firstVisitGuide, footerHtml, cityNo, showCard } from './common.js';
@@ -15,17 +15,17 @@ const hereBook = here ? here.book : null;
 
 $('#locPill').textContent = `순례 ${pick.dayNo}일째`;
 $('#locSub').innerHTML = here
-  ? `오늘 위치: <b>${esc(bookByN(here.book).name)} ${here.ch}장</b> · ${cityNo(here.book)}번째 도시`
+  ? `오늘 위치: <b>${esc(bookByN(here.book).name)} ${here.ch}장</b> · ${cityNo(here.book)}번째 말씀`
   : '순례를 모두 마쳤어요. 축하합니다!';
 
-// 도시 순서: 신약(계시록→마태), 구약(말라기→창세기)
+// 말씀 순서: 신약(계시록→마태), 구약(말라기→창세기)
 const ORDER = [...BOOKS].reverse();
 const groups = [
   ['신약', ORDER.filter((b) => b.testament === '신약'), '요한계시록 → 마태복음'],
   ['구약', ORDER.filter((b) => b.testament === '구약'), '말라기 → 창세기'],
 ];
 
-// ---- 한눈에: 66개 도시 칩 ----
+// ---- 한눈에: 66개 말씀 칩 ----
 function renderJourney() {
   $('#journey').innerHTML = ORDER.map((b) => {
     const done = store.chaptersDone(b.n, b.ch);
@@ -34,7 +34,7 @@ function renderJourney() {
   }).join('');
 }
 
-// ---- 도시 목록 ----
+// ---- 말씀 목록 ----
 $('#cities').innerHTML = groups.map(([t, list, range]) => `
   <h2 class="group-h">${t} <small>${range}</small></h2>
   ${list.map((b) => `<details class="city" id="city-${b.n}" data-n="${b.n}"><summary></summary><div class="city-body"></div></details>`).join('')}
@@ -63,7 +63,7 @@ function bodyHtml(b) {
   }
   return `
     <div class="city-tools">
-      <button class="btn small ghost" data-book ${hasBookVid ? '' : 'disabled'}>도시 소개 영상 (책 요약)</button>
+      <button class="btn small ghost" data-book ${hasBookVid ? '' : 'disabled'}>말씀 소개 영상 (책 요약)</button>
       ${done === b.ch ? '<button class="btn small primary" data-card>완독카드 만들기</button>' : `<span class="hint">모든 걸음 도장을 모으면 완독카드를 만들 수 있어요 (${done}/${b.ch})</span>`}
     </div>
     <div class="steps">${cells}</div>`;
@@ -106,24 +106,36 @@ function goTo(n, smooth = true) {
 // ---- 영상 모달 ----
 function openModal(b, ch) {
   const isBook = ch == null;
-  const entry = isBook ? vids.bookVideos[b.n] : vids.chapterVideos[`${b.n}-${ch}`];
+  const bookAll = isBook ? vids.bookVideos[b.n] : null;
+  const entry = isBook ? pickBookEntry(bookAll, null) : vids.chapterVideos[`${b.n}-${ch}`];
   if (!entry) return;
+  const parts = bookAll && bookAll.parts && bookAll.parts.length > 1 ? bookAll.parts : null;
   const playlist = isBook ? cfg.playlists.book : cfg.playlists.chapter;
   const d = openDialog(`
     <h2>${esc(b.name)}${isBook ? ' 전체 요약' : ` ${ch}장`}</h2>
-    <p class="hint">${isBook ? '도시 소개 영상' : `${cityNo(b.n)}번째 도시 · ${b.ch - ch + 1}번째 걸음`} · 재생하면 도장이 찍혀요</p>
+    <p class="hint">${isBook ? '말씀 소개 영상' : `${cityNo(b.n)}번째 말씀 · ${b.ch - ch + 1}번째 걸음`} · 재생하면 도장이 찍혀요</p>
+    ${parts ? `<div class="parts">${parts.map((p, i) => `<button class="btn small ${i === 0 ? 'primary' : 'ghost'}" data-part="${i}">${esc(p.label || `파트 ${i + 1}`)}</button>`).join('')}</div>` : ''}
     <div class="player-box"><div class="pl"></div></div>
-    <div class="dlg-actions"><a class="btn link" href="${watchUrl(entry, playlist)}" target="_blank" rel="noopener">유튜브에서 열기</a></div>`, 'player-dlg');
+    <div class="dlg-actions"><a class="btn link" id="ytOpen" href="${watchUrl(entry, playlist)}" target="_blank" rel="noopener">유튜브에서 열기</a></div>`, 'player-dlg');
   const player = createPlayer($('.pl', d), {
     onFail: () => { $('.pl', d).innerHTML = `<div class="player-msg">영상을 불러오지 못했어요. 아래 ‘유튜브에서 열기’를 눌러 주세요.</div>`; },
     onPlay: (meta) => {
       const r = store.stampPlay(meta, today);
-      if (r.newChapter && r.newBook) stampToast('도장이 찍혔어요!', `${b.name} 도시에 도착했습니다`);
+      if (r.newChapter && r.newBook) stampToast('도장이 찍혔어요!', `${b.name} 말씀에 도착했습니다`);
       else if (r.newChapter) stampToast('걸음 도장이 찍혔어요!', `${b.name} ${meta.ch}장`);
-      else if (r.newDate) stampToast('오늘 출석 도장이 찍혔어요!', '');
     },
   });
   player.load(entry, playlist, { autoplay: true, meta: isBook ? { kind: 'book', book: b.n } : { kind: 'chapter', book: b.n, ch } });
+  if (parts) {
+    $('.parts', d).addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-part]');
+      if (!btn) return;
+      const p = parts[Number(btn.dataset.part)];
+      $$('.parts .btn', d).forEach((x) => { x.className = `btn small ${x === btn ? 'primary' : 'ghost'}`; });
+      $('#ytOpen', d).href = watchUrl(p, playlist);
+      player.load(p, playlist, { autoplay: true, meta: { kind: 'book', book: b.n } });
+    });
+  }
   d.addEventListener('close', () => player.destroy());
 }
 

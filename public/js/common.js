@@ -6,7 +6,7 @@ import { makeCard } from './card.js';
 export const $ = (s, r = document) => r.querySelector(s);
 export const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 export const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-export const cityNo = (n) => BOOKS.length + 1 - n; // 계시록 = 1번째 도시
+export const cityNo = (n) => BOOKS.length + 1 - n; // 계시록 = 1번째 말씀
 
 export async function loadData() {
   const [cfg, vids] = await Promise.all([
@@ -30,10 +30,10 @@ export function renderHeader(active, cfg) {
   el.className = 'site-header';
   el.innerHTML = `
     <div class="wrap header-row">
-      <a class="brand" href="index.html">${logoSvg(38)}<span class="brand-name">${esc(cfg?.siteName ?? '바이블패스포트')}</span></a>
+      <a class="brand" href="index.html" aria-label="${esc(cfg?.siteName ?? 'Bible and Me')}"><img src="img/logo.png" width="670" height="136" alt="${esc(cfg?.siteName ?? 'Bible and Me')}"></a>
       <nav class="nav" aria-label="화면 이동">
-        <a href="index.html" class="${active === 'today' ? 'on' : ''}">오늘</a>
-        <a href="map.html" class="${active === 'map' ? 'on' : ''}">지도</a>
+        <a href="index.html" class="${active === 'today' ? 'on' : ''}">오늘의 말씀</a>
+        <a href="map.html" class="${active === 'map' ? 'on' : ''}">말씀의 발자취</a>
       </nav>
       <div class="header-tools">
         <button class="icon-btn" id="btnGuide" title="순례자 이용 가이드">가이드</button>
@@ -74,13 +74,13 @@ export const stampToast = (title, sub) =>
 export function showGuide() {
   const d = openDialog(`
     <h2>순례자 이용 가이드</h2>
-    <p class="lead">바이블패스포트는 <b>요한계시록에서 창세기까지, 거꾸로 걷는 성경 순례길</b>입니다. 하루 한 걸음씩 함께 걸어요.</p>
+    <p class="lead">Bible and Me는 <b>요한계시록에서 창세기까지, 거꾸로 걷는 성경 순례길</b>입니다. 하루 한 걸음씩 함께 걸어요.</p>
     <ol class="guide-steps">
-      <li><span>1</span><div><b>도시와 걸음</b><br>성경 한 권이 <em>도시</em>, 한 장이 <em>한 걸음</em>입니다. 66개 도시, 1,189걸음의 길이에요. 순례는 요한계시록 22장에서 출발합니다.</div></li>
+      <li><span>1</span><div><b>말씀과 걸음</b><br>성경 한 권이 <em>말씀</em>, 한 장이 <em>한 걸음</em>입니다. 66개 말씀, 1,189걸음의 길이에요. 순례는 요한계시록 22장에서 출발합니다.</div></li>
       <li><span>2</span><div><b>오늘의 걸음</b><br>매일 한국시간 자정에 모든 순례자가 <em>같은 영상</em>을 만납니다. 첫 화면에서 바로 재생하세요.</div></li>
-      <li><span>3</span><div><b>세 가지 도장</b><br>영상을 <em>재생하기만 해도</em> 출석체크가 됩니다. 끝까지 보지 않아도 괜찮아요.<br>· <b>출석 도장</b> — 오늘 날짜 칸<br>· <b>걸음 도장</b> — 본 장(章)<br>· <b>도시 도장</b> — 그 책의 걸음이 하나라도 찍히면 도착!</div></li>
-      <li><span>4</span><div><b>지도</b><br>‘지도’ 화면에서 66개 도시와 걸음을 한눈에 봅니다. 오늘 위치가 먼저 열리고, 도시마다 책 소개 영상과 장별 영상이 있어요.</div></li>
-      <li><span>5</span><div><b>완독카드</b><br>한 도시의 모든 걸음 도장을 모으면 <em>완독카드</em>를 만들어 가족·친구에게 공유할 수 있어요.</div></li>
+      <li><span>3</span><div><b>두 가지 도장</b><br>영상을 <em>재생하기만 해도</em> 도장이 찍힙니다. 끝까지 보지 않아도 괜찮아요.<br>· <b>걸음 도장</b> — 본 장(章)<br>· <b>말씀 도장</b> — 그 책의 걸음이 하나라도 찍히면 도착!</div></li>
+      <li><span>4</span><div><b>지도</b><br>‘말씀의 발자취’ 화면에서 66개 말씀과 걸음을 한눈에 봅니다. 오늘 위치가 먼저 열리고, 말씀마다 책 소개 영상과 장별 영상이 있어요.</div></li>
+      <li><span>5</span><div><b>완독카드</b><br>한 말씀의 모든 걸음 도장을 모으면 <em>완독카드</em>를 만들어 가족·친구에게 공유할 수 있어요.</div></li>
       <li><span>6</span><div><b>아침 알림</b><br>‘알림’에서 내 캘린더에 구독하면 매일 아침 오늘의 걸음이 알림으로 와요.</div></li>
       <li><span>7</span><div><b>기록 보관</b><br>도장은 이 기기의 브라우저에 저장됩니다. 기기를 바꿀 때는 ‘알림’ 창의 <em>복구 코드</em>를 이용하세요.</div></li>
     </ol>
@@ -146,7 +146,7 @@ export async function showCard(n, cfg) {
   const canShare = !!(navigator.canShare && navigator.canShare({ files: [file] }));
   $('.dlg-body', d).innerHTML = `
     <h2>${esc(b.name)} 완독카드</h2>
-    <img class="card-img" src="${url}" alt="${esc(b.name)} 도시 완주 카드">
+    <img class="card-img" src="${url}" alt="${esc(b.name)} 말씀 완주 카드">
     <div class="dlg-actions wrap-actions">
       ${canShare ? '<button class="btn primary" id="cardShare">공유하기</button>' : ''}
       <a class="btn ${canShare ? 'ghost' : 'primary'}" href="${url}" download="${esc(file.name)}">이미지 저장</a>
@@ -161,8 +161,7 @@ export function statsHtml() {
   const s = store.stats();
   return `
     <div class="stats">
-      <div class="stat"><b>${s.days}</b><span>출석 일수</span></div>
-      <div class="stat"><b>${s.books}<small>/${BOOKS.length}</small></b><span>도시 도착</span></div>
+      <div class="stat"><b>${s.books}<small>/${BOOKS.length}</small></b><span>말씀 도착</span></div>
       <div class="stat"><b>${s.chapters}<small>/${TOTAL_CH.toLocaleString()}</small></b><span>걸음</span></div>
     </div>`;
 }

@@ -20,12 +20,12 @@ small { font-weight: 400; color: var(--muted); }
 
 /* header */
 .site-header { position: sticky; top: 0; z-index: 20; background: rgba(255, 248, 236, .92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-.header-row { display: flex; align-items: center; gap: 12px; height: 62px; }
-.brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); }
+.header-row { display: flex; align-items: center; gap: 14px; height: 84px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
 .brand-name, .nav a, .icon-btn, .btn { white-space: nowrap; }
-.brand-name { font-weight: 800; font-size: 19px; letter-spacing: -.02em; }
+.brand img { display: block; height: 44px; width: auto; }
 .nav { display: flex; gap: 4px; margin-left: 12px; }
-.nav a { padding: 7px 16px; border-radius: 99px; text-decoration: none; color: var(--muted); font-weight: 700; }
+.nav a { padding: 8px 18px; border-radius: 99px; text-decoration: none; color: var(--muted); font-weight: 700; }
 .nav a.on { background: var(--ink); color: #fff; }
 .header-tools { margin-left: auto; display: flex; gap: 6px; }
 .icon-btn { background: #fff; border: 1px solid var(--line); border-radius: 99px; padding: 6px 14px; font-weight: 500; font-size: 14px; }
@@ -67,7 +67,7 @@ small { font-weight: 400; color: var(--muted); }
 .cta { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; background: linear-gradient(120deg, var(--sky-l), var(--sun-l)); }
 
 /* stats */
-.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+.stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 14px; }
 .stat { background: var(--bg); border-radius: 14px; padding: 10px 8px; text-align: center; }
 .stat b { display: block; font-size: 24px; font-weight: 800; line-height: 1.2; }
 .stat b small { font-size: 13px; }
@@ -100,7 +100,7 @@ small { font-weight: 400; color: var(--muted); }
 .lg.here { background: var(--sun); } .lg.done { background: var(--coral); } .lg.full { background: var(--mint); }
 .group-h { font-size: 22px; font-weight: 800; margin: 26px 0 10px; }
 .group-h small { font-size: 14px; margin-left: 6px; }
-.city { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 10px; box-shadow: var(--shadow); scroll-margin-top: 76px; }
+.city { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 10px; box-shadow: var(--shadow); scroll-margin-top: 100px; }
 .city[open] { border-color: var(--sky); }
 .city summary { list-style: none; display: flex; align-items: center; gap: 10px; padding: 12px 14px; cursor: pointer; flex-wrap: wrap; }
 .city summary::-webkit-details-marker { display: none; }
@@ -147,6 +147,7 @@ select, textarea { font: inherit; border: 1.5px solid var(--line); border-radius
 textarea { font-size: 12px; word-break: break-all; }
 .card-img { display: block; width: 100%; max-width: 420px; margin: 12px auto 0; border-radius: 14px; box-shadow: var(--shadow); }
 .dlg .player-box { margin-top: 12px; }
+.parts { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
 
 /* toast */
 #toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 140%); z-index: 50; background: var(--ink); color: #fff; border-radius: 18px; padding: 12px 18px 12px 12px; display: flex; gap: 12px; align-items: center; box-shadow: 0 10px 30px rgba(20, 32, 59, .4); transition: transform .35s cubic-bezier(.2, 1.4, .4, 1); max-width: calc(100vw - 24px); }
@@ -165,7 +166,9 @@ textarea { font-size: 12px; word-break: break-all; }
   .nav { order: 3; width: 100%; margin: 0; }
   .nav a { flex: 1; text-align: center; padding: 6px 12px; background: #fff; border: 1px solid var(--line); }
   .nav a.on { border-color: var(--ink); }
-  .city { scroll-margin-top: 112px; }
+  .brand img { height: 32px; }
+  .header-tools { gap: 4px; }
+  .city { scroll-margin-top: 140px; }
   .city-prog { margin-left: 42px; width: 100%; }
   .bar { flex: 1; }
   .cta .btn { width: 100%; }

@@ -44,3 +44,13 @@ export function pickToday(dateStr, startStr, vids) {
   const item = pool.length ? pool[hashStr(dateStr) % pool.length] : null;
   return { dayNo: day + 1, scheduled, item, fallback: true };
 }
+
+/** 책 영상이 여러 개(예: 사도행전 전·후반부)면 장이 속한 것을, 아니면 첫 번째를 돌려준다. */
+export function pickBookEntry(entry, ch = null) {
+  if (!entry) return null;
+  if (entry.parts && entry.parts.length) {
+    const hit = ch != null && entry.parts.find((p) => p.range && ch >= p.range[0] && ch <= p.range[1]);
+    return hit || entry.parts[0];
+  }
+  return entry;
+}

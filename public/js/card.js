@@ -23,10 +23,10 @@ export async function makeCard({ bookName, cityNo, chapters, date, siteName, sit
   g.shadowColor = 'transparent';
   g.fillStyle = '#1E2A47'; g.beginPath(); g.roundRect(px, py, pw, 150, [r, r, 0, 0]); g.fill();
   g.fillStyle = '#FFC53D'; g.textAlign = 'left'; g.font = font(800, 54); g.fillText(siteName, px + 56, py + 94);
-  g.fillStyle = '#fff'; g.textAlign = 'right'; g.font = font(500, 30); g.fillText('PILGRIM PASSPORT', px + pw - 56, py + 92);
+  g.fillStyle = '#fff'; g.textAlign = 'right'; g.font = font(500, 30); g.fillText('말씀의 발자취', px + pw - 56, py + 92);
 
   g.textAlign = 'center'; g.fillStyle = '#6B7694'; g.font = font(500, 38);
-  g.fillText(`${cityNo}번째 도시`, W / 2, py + 270);
+  g.fillText(`${cityNo}번째 말씀`, W / 2, py + 270);
 
   // 도장
   const cx = W / 2, cy = py + 560, R = 230;
@@ -37,7 +37,7 @@ export async function makeCard({ bookName, cityNo, chapters, date, siteName, sit
   let size = 112; g.font = font(800, size);
   while (g.measureText(bookName).width > R * 1.55 && size > 40) { size -= 4; g.font = font(800, size); }
   g.textBaseline = 'middle'; g.fillText(bookName, 0, -10);
-  g.font = font(800, 46); g.fillText('도시 완주', 0, 92);
+  g.font = font(800, 46); g.fillText('말씀 완주', 0, 92);
   g.font = font(800, 36); g.fillText('★ ★ ★', 0, -118);
   g.restore();
 
